@@ -1,0 +1,5 @@
+RPM packaging materials for django-pki
+
+As it is, this depends on the zultron github repo:
+
+https://github.com/zultron/django-pki
