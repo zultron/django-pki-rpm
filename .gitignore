@@ -1,0 +1,8 @@
+# sources
+/django-pki-*.tar.gz
+
+# build artifacts
+/django-pki-*/
+/.build-*.log
+/django-pki-*.src.rpm
+/noarch/
