@@ -3,3 +3,10 @@ RPM packaging materials for django-pki
 As it is, this depends on the zultron github repo:
 
 https://github.com/zultron/django-pki
+
+It probably depends on EPEL for el6, and two additional RPMs not found
+there:
+
+https://github.com/zultron/python-iterpipes-rpm
+
+https://github.com/zultron/pygraphviz-rpm
