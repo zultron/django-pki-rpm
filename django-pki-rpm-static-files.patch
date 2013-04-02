@@ -1,0 +1,24 @@
+Enable config doc customization for installation-specific python sitelib
+
+diff -up django-pki-0.20.0/docs/installation/configuration.rst.rpm-static-files django-pki-0.20.0/docs/installation/configuration.rst
+--- django-pki-0.20.0/docs/installation/configuration.rst.rpm-static-files	2013-04-02 15:43:36.000000000 -0500
++++ django-pki-0.20.0/docs/installation/configuration.rst	2013-04-02 15:47:48.000000000 -0500
+@@ -43,7 +43,7 @@ Edit project's settings.py
+   
+   .. code-block:: python
+         
+-        TEMPLATE_DIRS = ('/Library/Python/2.6/site-packages/pki/templates',)
++        TEMPLATE_DIRS = ('@PYTHON_SITELIB@/pki/templates',)
+ 
+ 
+ 3. Add 'pki.middleware.PkiExceptionMiddleware' to MIDDLEWARE_CLASSES (used for exception logging):
+@@ -83,8 +83,7 @@ Edit project's settings.py
+ 
+   .. code-block:: python
+ 
+-    STATICFILES_DIRS = '/Library/Python/2.6/site-packages/pki/media/'
+-    STATICFILES_DIRS = '/var/www/myhost/static/pki'
++    STATICFILES_DIRS = '@PYTHON_SITELIB@/pki/media'
+     
+     STATIC_URL = '/static/'
+     STATIC_URL = '/pki_media/'

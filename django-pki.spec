@@ -1,4 +1,4 @@
-%global _gitrel 20130402git51b3f86
+%global _gitrel    20130402git562fa1e
 %global _dotgitrel %{?_gitrel:.%{_gitrel}}
 
 Name:           django-pki
@@ -11,6 +11,8 @@ License:        GPLv2+
 URL:            https://github.com/dkerwin/django-pki
 # My fork (of a fork of a fork):  https://github.com/zultron/django-pki
 Source0:        %{name}-%{version}%{?_dotgitrel}.tar.gz
+# Document where static files are located
+Patch0:         %{name}-rpm-static-files.patch
 
 BuildArch:      noarch
 
@@ -41,6 +43,7 @@ personal CA infrastructure. Features include:
 
 %prep
 %setup -q
+%patch0 -p1 -z .rpm-static-files
 
 
 %build
@@ -48,6 +51,9 @@ personal CA infrastructure. Features include:
 
 # build the docs
 pushd docs
+# add correct python sitelib
+sed -i 's,@PYTHON_SITELIB@,%{python_sitelib},' \
+    installation/configuration.rst
 SPHINXBUILD=sphinx-build
 if test "%{?rhel}" = 6; then
    SPHINXBUILD=sphinx-1.0-build
@@ -59,6 +65,11 @@ popd
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 
+# Fix files that should have been installed as symlinks
+for i in delete_detail pki_admin; do
+    ln -sf $i.js %{buildroot}%{python_sitelib}/pki/media/pki/js/$i.min.js
+done
+
  
 %files
 %doc AUTHORS CHANGELOG COPYING LICENSE README.markdown docs/_build/html
@@ -66,6 +77,6 @@ popd
 
 
 %changelog
-* Tue Apr  2 2013 John Morris <john@zultron.com> - 0.20.0-0.1.20130402git51b3f86
+* Tue Apr  2 2013 John Morris <john@zultron.com> - 0.20.0-0.1.20130402git2d1c037
 - initial package
 
